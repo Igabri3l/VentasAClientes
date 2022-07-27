@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+	<bean id="implementacionClientesDAO" class="ar.com.abc.ventas.bdd.ImplementacionClientesDAO">
+		<constructor-arg value="localhost" />
+		<constructor-arg value="root" />
+		<constructor-arg value="gabriel2048" />
+	</bean>
+
+	<bean id="implementacionModeloCliente" class="ar.com.abc.ventas.bdd.ImplementacionModeloCliente">
+		<constructor-arg ref="implementacionClientesDAO" />
+	</bean>
+
+	<bean id="iguVentas1" class="ar.com.abc.ventas.igu.IguVentas">
+		<property name="modelo" ref="implementacionModeloCliente" />
+	</bean>
+
+	<bean id="iguVentas2" class="ar.com.abc.ventas.igu.IguVentas">
+		<property name="modelo" ref="implementacionModeloCliente" />
+	</bean>
+
+	<bean id="implementacionDelControlador1" class="ar.com.abc.ventas.ImplementacionDelControlador">
+		<property name="modelo" ref="implementacionModeloCliente" />
+		<property name="vista">
+			<bean class="ar.com.abc.ventas.ImplementacionDeLaVista">
+				<property name="modelo" ref="implementacionModeloCliente" />
+				<property name="igu" ref="iguVentas1" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="implementacionDelControlador2" class="ar.com.abc.ventas.ImplementacionDelControlador">
+		<property name="modelo" ref="implementacionModeloCliente" />
+		<property name="vista">
+			<bean class="ar.com.abc.ventas.ImplementacionDeLaVista">
+				<property name="modelo" ref="implementacionModeloCliente" />
+				<property name="igu" ref="iguVentas2" />
+			</bean>
+		</property>
+	</bean>
+
+
+</beans>
